@@ -25,4 +25,15 @@ Route::post('/ajax_login', 'ajaxController@login');
 Route::post('/ajax_register', 'ajaxController@register');
 Route::post('/ajax_logout', 'ajaxController@logout');
 
-Route::get('/user', 'UserController@index');
+// Route User
+Route::get('/users', 'UserController@index')->name('users');
+Route::get('/users-list', 'UserController@usersList')->name('users-list');
+Route::post('/create-user', 'UserController@createUser')->name('create-user');
+Route::post('/get-user', 'UserController@getUser')->name('get-user');
+Route::post('/update-user', 'UserController@updateUser')->name('update-user');
+Route::delete('/user/{id}', 'UserController@deleteUser');
+
+//Route Master Buku
+Route::get('/master-buku', 'MasterBukuController@index')->name('master-buku');
+Route::get('/master-buku-list', 'MasterBukuController@MasterBukuList')->name('master-buku-list');
+Route::post('/create-master-buku', 'MasterBukuController@createMasterBuku')->name('create-master-buku');

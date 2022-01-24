@@ -15,10 +15,11 @@
         <title>Peminjaman Buku</title>
 
         <!-- Custom fonts for this template-->
-        <link rel="icon" type="image/png" sizes="192x192" href="https://web-assets.manutd.com/dist/statics/android-icon-192x192.png">
         <link href="{{ asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <link rel="stylesheet" href="{{asset('dist\css\datepicker.css')}}">
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 
         <!-- Custom styles for this template-->
         <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet" />
@@ -39,8 +40,6 @@
             } */
         </style>
     </head>
-
-
 
     <body id="page-top">
         <!-- Page Wrapper -->
@@ -76,10 +75,16 @@
 
                 @if(session()->get('nama') == 'admin')
                 <!-- Menu Admin -->
-                <li id="rekap_absen" class="nav-item">
-                    <a class="nav-link" href="{{ url('/user') }}">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/users') }}">
                         <i class="fas fa-fw fa-user"></i>
                         <span>User List</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/master-buku') }}">
+                        <i class="fas fa-fw fa-book"></i>
+                        <span>Master Buku</span>
                     </a>
                 </li>
                 @endif
@@ -331,8 +336,8 @@
             </div>
         </div>
 
-        <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link type="text/css"  href="bootstrap-datepicker/css/bootstrap-datepicker.css"  rel="stylesheet">
+        {{-- <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet"> --}}
+        {{-- <link type="text/css"  href="bootstrap-datepicker/css/bootstrap-datepicker.css"  rel="stylesheet"> --}}
         <script src="{{asset('dist\js\datepicker.js')}}"></script>
         <!-- Bootstrap core JavaScript-->
         <script src="{{ asset('vendor/jquery/jquery.min.js') }} "></script>
@@ -352,84 +357,16 @@
 
         <script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
 
-        <script src="jquery/jquery-2.2.1.js"></script>
-        <script src="bootstrap/js/bootstrap.js"></script>
-        <script src="bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-
         <!-- Page level custom scripts -->
         <!-- <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
         <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script> -->
 
-        <script>
-            window.addEventListener('DOMContentLoaded', (event) => {
-                let nav = document.getElementsByClassName('nav-item');
+        @if((request()->route()->getAction()['as']) == 'users')
+        @include('users.view_user_js')
+        @endif
 
-                // Mendapatkan route belakang url
-                let route_url = window.location.pathname;
-                    route_url = route_url.replace('/', '');
-
-                // ambil nav menu sesuai dengan route_url
-                let menu = document.getElementById(`${route_url}`);
-
-                // menambahkan kelas active sesuai route
-                menu.classList.add('active');
-
-                // ambil semua nav
-                let menu_all = document.getElementsByClassName('nav-item');
-
-                // convert menu_all ke array
-                menu_all = Array.from(menu_all);
-
-                menu_all.forEach((element)=>{
-
-                    // Ketika Link nav menu di klik
-                    element.addEventListener('click', (e)=>{
-                    removeAllActiveClass(menu_all);
-                    });
-
-                });
-
-                // Ketika tombol logout di klik
-                let logout = document.querySelector('.logout');
-                logout.addEventListener('click', function(e){
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        type    : 'POST',
-                        url     : "{{url('/ajax_logout')}}",
-                        data    : {},
-                        // dataType: 'json',
-                        success: function(data){
-                            console.log(data);
-                            if(data.success == 1){
-                                window.location.href="{{url('/')}}";
-                            }
-
-                        },
-                        error: function(){
-                            console.log('error');
-
-                        }
-                    });
-
-                    e.preventDefault();
-                });
-            });
-        </script>
-        <script>
-          // Fungsi Menghapus semua kelas yang mengandung 'active'
-          function removeAllActiveClass(menu_all){
-            menu_all.forEach((element)=>{
-                  if(element.classList.contains('active')){
-                    element.classList.remove('active');
-                  }
-              });
-
-              return ;
-          }
-        </script>
+        @if((request()->route()->getAction()['as']) == 'master-buku')
+        @include('master_buku.view_master_buku_js')
+        @endif
     </body>
 </html>

@@ -143,7 +143,7 @@
                     }else if(email == 'kasiekbang@gmail.com'){
                       window.location.href="{{url('/jadwal')}}";
                     }else{
-                      window.location.href="{{url('/user')}}";
+                      window.location.href="{{url('/users')}}";
                     }
                 }
 
