@@ -5,7 +5,7 @@
         serverSide: true,
         ajax: "{{ url('users-list') }}",
         columns: [
-                    { data: 'id', name: 'id', sClass:'text-center'},
+                    { data: 'id' , name: 'id', sClass:'text-center'},
                     { data: 'username', name: 'username', sClass:'text-center'},
                     { data: 'email', name: 'email', sClass:'text-center'},
                     { data: 'Actions', name: 'Actions',orderable:false,serachable:false,sClass:'text-center'},

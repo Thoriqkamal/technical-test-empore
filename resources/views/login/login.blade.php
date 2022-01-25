@@ -1,6 +1,5 @@
 @if(session()->has('nama'))
 {{session()->has('nama')}}
-<script>window.location = "/jadwal";</script>
 @endif
 <!DOCTYPE html>
 <html lang="en">
@@ -99,9 +98,9 @@
   <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
   <style>
-    .bg-gradient-primary {
+    /* .bg-gradient-primary {
     background-image: linear-gradient(180deg,red 10%,red 100%);
-    }
+    } */
 </style>
 
   <script>
@@ -138,12 +137,10 @@
             success: function(data){
                 // console.log(data);
                 if(data.success == 1){
-                    if(email == 'bendahara@gmail.com'){
-                      window.location.href="{{url('/penggajian')}}";
-                    }else if(email == 'kasiekbang@gmail.com'){
-                      window.location.href="{{url('/jadwal')}}";
-                    }else{
+                    if(email == 'admin@gmail.com'){
                       window.location.href="{{url('/users')}}";
+                    }else{
+                      window.location.href="{{url('/pengajuan-pinjaman-buku')}}";
                     }
                 }
 

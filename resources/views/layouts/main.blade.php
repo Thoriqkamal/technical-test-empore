@@ -91,10 +91,17 @@
 
                 @if(session()->get('nama') != 'admin')
                 <!-- Menu Anggota -->
-                <li id="penggajian" class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ url('/pengajuan-pinjaman-buku') }}">
-                        <i class="fas fa-fw fa-calendar"></i>
-                        <span>Pengajuan Pinjaman Buku</span>
+                        <i class="fas fa-fw fa-book"></i>
+                        <span>Peminjaman Buku</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/pinjaman-buku') }}">
+                        <i class="fas fa-fw fa-list"></i>
+                        <span>List Peminjaman Buku</span>
                     </a>
                 </li>
                 @endif
@@ -336,6 +343,37 @@
             </div>
         </div>
 
+        <script>
+             // Ketika tombol logout di klik
+             let logout = document.querySelector('.logout');
+                logout.addEventListener('click', function(e){
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        type    : 'POST',
+                        url     : "{{url('/ajax_logout')}}",
+                        data    : {},
+                        // dataType: 'json',
+                        success: function(data){
+                            console.log(data);
+                            if(data.success == 1){
+                                window.location.href="{{url('/')}}";
+                            }
+
+                        },
+                        error: function(){
+                            console.log('error');
+
+                        }
+                    });
+
+                    e.preventDefault();
+                });
+        </script>
+
         {{-- <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet"> --}}
         {{-- <link type="text/css"  href="bootstrap-datepicker/css/bootstrap-datepicker.css"  rel="stylesheet"> --}}
         <script src="{{asset('dist\js\datepicker.js')}}"></script>
@@ -367,6 +405,10 @@
 
         @if((request()->route()->getAction()['as']) == 'master-buku')
         @include('master_buku.view_master_buku_js')
+        @endif
+
+        @if((request()->route()->getAction()['as']) == 'pinjaman-buku')
+        @include('pinjaman_buku.list_pinjaman_buku_js')
         @endif
     </body>
 </html>

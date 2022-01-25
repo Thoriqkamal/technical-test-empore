@@ -87,33 +87,43 @@
     </div>
 </div>
 
-<!-- Modal Edit Anggota -->
-<div class="modal" id="EditProductModal">
+<!-- Modal Edit Master Buku -->
+<div class="modal" id="EditMasterBukuModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Edit Anggota</h4>
+                <h4 class="modal-title">Edit Master Buku</h4>
                 <button type="button" class="close modelClose" data-dismiss="modal">&times;</button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <form method="POST" action="{{url('update-user')}}" enctype="multipart/form-data">
+                <form method="POST" action="{{url('update-master-buku')}}">
                 {{ csrf_field() }}
-                <input type="hidden" class="form-control" id="id_update_user" name="id_update_user">
+                <input type="hidden" class="form-control" id="id_update_master_buku" name="id_update_master_buku">
                 <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" name="update_username" class="form-control" id="update_username" placeholder="Masukkan Username" autocomplete="off">
+                    <label for="kode_buku">Kode Buku</label>
+                    <input type="text" name="update_kode_buku" class="form-control" id="update_kode_buku" placeholder="Masukkan Kode Buku">
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" name="update_email" id="update_email" placeholder="Masukkan Email">
+                    <label for="judul_buku">Judul Buku</label>
+                    <input type="text" class="form-control" name="update_judul_buku" id="update_judul_buku" placeholder="Masukkan Judul Buku">
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" name="update_password" id="update_password" placeholder="Masukkan Password">
+                    <label for="tahun_terbit">Tahun Terbit</label>
+                    <input type="date" class="form-control" name="update_tahun_terbit" id="update_tahun_terbit" placeholder="Masukkan Tahun Terbit">
+                </div>
+
+                <div class="form-group">
+                    <label for="penulis">Penulis</label>
+                    <input type="text" class="form-control" name="update_penulis" id="update_penulis" placeholder="Masukkan Penulis">
+                </div>
+
+                <div class="form-group">
+                    <label for="stok_buku">Stok Buku</label>
+                    <input type="number" class="form-control" name="update_stok_buku" id="update_stok_buku" placeholder="Masukkan Stok Buku">
                 </div>
             </div>
             <!-- Modal footer -->
@@ -126,7 +136,7 @@
 </div>
 
 <!-- Modal Delete Anggota -->
-<div class="modal" id="DeleteUserModal">
+<div class="modal" id="DeleteMasterBukuModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
@@ -136,11 +146,11 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-                <h4>Are you sure want to delete this user?</h4>
+                <h4>Are you sure want to delete this buku?</h4>
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="SubmitDeleteUserForm">Yes</button>
+                <button type="button" class="btn btn-danger" id="SubmitDeleteMasterBukuForm">Yes</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
             </div>
         </div>
