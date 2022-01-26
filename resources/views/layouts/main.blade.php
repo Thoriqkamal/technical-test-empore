@@ -87,6 +87,20 @@
                         <span>Master Buku</span>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/list-pengajuan-peminjaman') }}">
+                        <i class="fas fa-fw fa-list"></i>
+                        <span>List Pengajuan Pinjaman</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/list-peminjaman-buku') }}">
+                        <i class="fas fa-fw fa-list"></i>
+                        <span>List Peminjaman Buku</span>
+                    </a>
+                </li>
                 @endif
 
                 @if(session()->get('nama') != 'admin')
@@ -210,7 +224,7 @@
                             </li>
 
                             <!-- Nav Item - Messages -->
-                            <li class="nav-item dropdown no-arrow mx-1">
+                            {{-- <li class="nav-item dropdown no-arrow mx-1">
                                 <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-envelope fa-fw"></i>
                                     <!-- Counter - Messages -->
@@ -263,12 +277,12 @@
                                     </a>
                                     <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                                 </div>
-                            </li>
+                            </li> --}}
 
                             <div class="topbar-divider d-none d-sm-block"></div>
 
                             <!-- Nav Item - User Information -->
-                            <li class="nav-item dropdown no-arrow">
+                            {{-- <li class="nav-item dropdown no-arrow">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{session()->get('nama')}}</span>
                                     <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60" />
@@ -293,7 +307,7 @@
                                         Logout
                                     </a>
                                 </div>
-                            </li>
+                            </li> --}}
                         </ul>
                     </nav>
                     <!-- End of Topbar -->
@@ -409,6 +423,14 @@
 
         @if((request()->route()->getAction()['as']) == 'pinjaman-buku')
         @include('pinjaman_buku.list_pinjaman_buku_js')
+        @endif
+
+        @if((request()->route()->getAction()['as']) == 'list-pengajuan-peminjaman')
+        @include('list_pengajuan_pinjaman.list_pengajuan_pinjaman_js')
+        @endif
+
+        @if((request()->route()->getAction()['as']) == 'list-peminjaman-buku')
+        @include('list_peminjaman_buku.view_list_peminjaman_buku_js')
         @endif
     </body>
 </html>

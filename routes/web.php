@@ -48,3 +48,13 @@ Route::post('/create-pinjaman-buku', 'PinjamanBukuController@createPinjamanBuku'
 //Route List Pinjaman Buku
 Route::get('/pinjaman-buku', 'PinjamanBukuController@indexPinjamanBuku')->name('pinjaman-buku');
 Route::get('/list-pinjaman-buku', 'PinjamanBukuController@ListPinjamanBuku')->name('list-pinjaman-buku');
+
+//Route List Pengajuan Peminjaman Buku
+Route::get('/list-pengajuan-peminjaman', 'ListPengajuanPinjamanController@index')->name('list-pengajuan-peminjaman');
+Route::get('/pengajuan-pinjaman', 'ListPengajuanPinjamanController@PengajuanPinjaman')->name('pengajuan-pinjaman');
+Route::post('/approve-pinjaman', 'ListPengajuanPinjamanController@approvePinjaman')->name('approve-pinjaman');
+Route::post('/reject-pinjaman', 'ListPengajuanPinjamanController@rejectPinjaman')->name('reject-pinjaman');
+
+//Route List Peminjaman Buku
+Route::get('/list-peminjaman-buku', 'ListPeminjamanBukuController@index')->name('list-peminjaman-buku');
+Route::get('/peminjaman-buku', 'ListPeminjamanBukuController@PeminjamanBuku')->name('peminjaman-buku');
