@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Redirect,Response,DB,Config;
 use Datatables;
+use App\PinjamanBuku;
 
 class ListPeminjamanBukuController extends Controller
 {
@@ -17,7 +18,7 @@ class ListPeminjamanBukuController extends Controller
      */
     public function __construct()
     {
-        // $this->PinjamanBuku = new PinjamanBuku;
+        $this->PinjamanBuku = new PinjamanBuku;
     }
 
     /**
@@ -34,24 +35,45 @@ class ListPeminjamanBukuController extends Controller
     public function PeminjamanBuku(Request $request)
     {
         $pinjaman_buku = PinjamanBuku::join('tb_master_buku', 'tb_pinjaman_buku.id_master_buku', '=', 'tb_master_buku.id')
+        ->where('is_approve', 2)
+        ->where('is_reject', 0)
         ->get(['tb_pinjaman_buku.*', 'tb_master_buku.judul_buku', 'tb_master_buku.stok_buku']);
 
         return \DataTables::of($pinjaman_buku)
         ->addColumn('Actions', function($pinjaman_buku) {
-            return '<button type="button" class="btn btn-success btn-sm" id="approvePinjaman" data-id="'.$pinjaman_buku->id.'" data-toggle="modal" data-target="#ApproveModal">Approve</button>
-            <button type="button" class="btn btn-danger btn-sm" id="rejectPinjaman" data-id="'.$pinjaman_buku->id.'" data-toggle="modal" data-target="#RejectModal">Reject</button>';
+            return '<button type="button" class="btn btn-success btn-sm" id="updateStatus" data-id="'.$pinjaman_buku->id.'" data-toggle="modal" data-target="#UpdateStatusModal">Update</button>';
         })
         ->editColumn('is_status', function($row){
-            if($row->is_approve == 1 && $row->is_reject == 0)
-                return $row->is_approve = 'Waiting Approve';
-            elseif($row->is_approve == 2 && $row->is_reject == 0)
-                return $row->is_approve = 'Sedang Di Pinjam';
-            elseif($row->is_approve == 0 && $row->is_reject == 0)
-                return $row->is_approve = 'Telah Pinjam';
-            elseif($row->is_approve == 0 && $row->is_reject == 1)
-                return $row->is_approve = 'Peminjaman Di Tolak';
+            if($row->is_approve == 2 && $row->is_reject == 0)
+                return $row->is_approve = 'Approve';
         })
         ->rawColumns(['is_status', 'Actions'])
         ->make(true);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $pinjaman_buku = PinjamanBuku::join('tb_master_buku', 'tb_pinjaman_buku.id_master_buku', '=', 'tb_master_buku.id')
+        ->where('tb_pinjaman_buku.id', '=', $request->id)
+        ->get(['tb_pinjaman_buku.*', 'tb_master_buku.judul_buku', 'tb_master_buku.stok_buku']);
+        foreach ($pinjaman_buku as $key => $value) {
+            if ($value->is_approve == 2 && $value->is_reject == 0) {
+                $stok_buku = $value->stok_buku + 1;
+                DB::table('tb_pinjaman_buku')
+                ->join('tb_master_buku', 'tb_pinjaman_buku.id_master_buku', '=', 'tb_master_buku.id')
+                ->where('tb_pinjaman_buku.id', $request->id)
+                ->update([
+                    'stok_buku'   => $stok_buku,
+                    'is_approve'  => 0,
+                ]);
+
+                $status = 'Success di update';
+            }else{
+                $status = 'List peminjaman sudah di update!';
+            }
+        }
+
+        echo json_encode($status);
+        exit();
     }
 }

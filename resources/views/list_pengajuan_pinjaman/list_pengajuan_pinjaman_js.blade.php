@@ -41,8 +41,14 @@ $(document).on('click', '#ApproveModalForm', function(e) {
                 alert('Success di Approve!');
                 window.location.reload();
                 window.location.href = "{{ url('list-pengajuan-peminjaman') }}";
+            }else if (rt == 'Tidak bisa approve status reject!') {
+                alert('Tidak bisa approve status reject!');
+                $('#ApproveModal').modal('hide');
             }else if(rt == 'Pengajuan sudah di Approve!'){
                 alert('Pengajuan sudah di Approve!');
+                $('#ApproveModal').modal('hide');
+            }else if (rt == 'Tidak bisa approve status sudah di kembalikan!') {
+                alert('Tidak bisa approve status sudah di kembalikan!');
                 $('#ApproveModal').modal('hide');
             }
         }
@@ -73,8 +79,14 @@ $(document).on('click', '#RejectModalForm', function(e) {
                 alert('Success di Reject!');
                 window.location.reload();
                 window.location.href = "{{ url('list-pengajuan-peminjaman') }}";
-            }else if(rt == 'Pengajuan sudah di reject'){
+            }else if(rt == 'Pengajuan sudah di reject!'){
                 alert('Pengajuan sudah di Reject!');
+                $('#RejectModal').modal('hide');
+            }else if(rt == 'Tidak bisa reject status approve!'){
+                alert('Tidak bisa reject status approve!');
+                $('#RejectModal').modal('hide');
+            }else if(rt == 'Tidak bisa reject status sudah di kembalikan!'){
+                alert('Tidak bisa reject status sudah di kembalikan!');
                 $('#RejectModal').modal('hide');
             }
         }

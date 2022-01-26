@@ -46,11 +46,11 @@ class ListPengajuanPinjamanController extends Controller
             if($row->is_approve == 1 && $row->is_reject == 0)
                 return $row->is_approve = 'Waiting Approve';
             elseif($row->is_approve == 2 && $row->is_reject == 0)
-                return $row->is_approve = 'Sedang Di Pinjam';
+                return $row->is_approve = 'Approve';
             elseif($row->is_approve == 0 && $row->is_reject == 0)
-                return $row->is_approve = 'Telah Pinjam';
+                return $row->is_approve = 'Sudah di kembalikan';
             elseif($row->is_approve == 0 && $row->is_reject == 1)
-                return $row->is_approve = 'Peminjaman Di Tolak';
+                return $row->is_approve = 'Reject';
         })
         ->rawColumns(['is_status', 'Actions'])
         ->make(true);
@@ -62,7 +62,7 @@ class ListPengajuanPinjamanController extends Controller
         ->where('tb_pinjaman_buku.id', '=', $request->id)
         ->get(['tb_pinjaman_buku.*', 'tb_master_buku.judul_buku', 'tb_master_buku.stok_buku']);
         foreach ($pinjaman_buku as $key => $value) {
-            if ($value->is_approve == 1) {
+            if ($value->is_approve == 1 && $value->is_reject == 0) {
                 $stok_buku = $value->stok_buku - 1;
                 DB::table('tb_pinjaman_buku')
                 ->join('tb_master_buku', 'tb_pinjaman_buku.id_master_buku', '=', 'tb_master_buku.id')
@@ -73,7 +73,11 @@ class ListPengajuanPinjamanController extends Controller
                 ]);
 
                 $status = 'Success di approve';
-            }else{
+            }else if ($value->is_approve == 0 && $value->is_reject == 1) {
+                $status = 'Tidak bisa approve status reject!';
+            }else if ($value->is_approve == 0 && $value->is_reject == 0){
+                $status = 'Tidak bisa approve status sudah di kembalikan!';
+            }else if ($value->is_approve == 2 && $value->is_reject == 0){
                 $status = 'Pengajuan sudah di Approve!';
             }
         }
@@ -98,8 +102,13 @@ class ListPengajuanPinjamanController extends Controller
                 ]);
 
                 $status = 'Success di reject';
-            }else{
-                $status = 'Pengajuan sudah di reject';
+
+            }else if ($value->is_approve == 2 && $value->is_reject == 0){
+                $status = 'Tidak bisa reject status approve!';
+            }else if ($value->is_approve == 0 && $value->is_reject == 0){
+                $status = 'Tidak bisa reject status sudah di kembalikan!';
+            }else if ($value->is_approve == 0 && $value->is_reject == 1) {
+                $status = 'Pengajuan sudah di reject!';
             }
         }
 

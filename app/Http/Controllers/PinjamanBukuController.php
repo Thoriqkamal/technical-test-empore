@@ -69,13 +69,13 @@ class PinjamanBukuController extends Controller
         return \DataTables::of($pinjaman_buku)
         ->editColumn('is_status', function($row){
             if($row->is_approve == 1 && $row->is_reject == 0)
-                return $row->is_approve = 'Waiting Approve';
+                return $row->is_approve = 'Waiting approve';
             elseif($row->is_approve == 2 && $row->is_reject == 0)
-                return $row->is_approve = 'Sedang Di Pinjam';
+                return $row->is_approve = 'Sedang di pinjam';
             elseif($row->is_approve == 0 && $row->is_reject == 0)
-                return $row->is_approve = 'Telah Pinjam';
+                return $row->is_approve = 'Telah di pinjam';
             elseif($row->is_approve == 0 && $row->is_reject == 1)
-                return $row->is_approve = 'Peminjaman Di Tolak';
+                return $row->is_approve = 'Peminjaman di tolak';
         })
         ->rawColumns(['is_status'])
         ->make(true);

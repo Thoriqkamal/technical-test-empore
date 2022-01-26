@@ -58,3 +58,4 @@ Route::post('/reject-pinjaman', 'ListPengajuanPinjamanController@rejectPinjaman'
 //Route List Peminjaman Buku
 Route::get('/list-peminjaman-buku', 'ListPeminjamanBukuController@index')->name('list-peminjaman-buku');
 Route::get('/peminjaman-buku', 'ListPeminjamanBukuController@PeminjamanBuku')->name('peminjaman-buku');
+Route::post('/update-status', 'ListPeminjamanBukuController@updateStatus')->name('update-status');
