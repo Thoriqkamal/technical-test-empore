@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class MasterBuku extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('tb_user', function (Blueprint $table) {
+        Schema::create('tb_master_buku', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('username');
-            $table->string('email');
-            $table->string('password', 60);
+            $table->string('kode_buku');
+            $table->string('judul_buku');
+            $table->date('tahun_terbit');
+            $table->string('penulis');
+            $table->string('stok_buku');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_user');
+        Schema::dropIfExists('tb_master_buku');
     }
 }

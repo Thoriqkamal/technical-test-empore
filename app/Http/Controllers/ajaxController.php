@@ -25,22 +25,6 @@ class ajaxController extends Controller
 
     }
 
-    public function register(Request $request){
-
-        $data = [
-            'firstname'     => $request->firstname,
-            'lastname'      => $request->lastname,
-            'email'         => $request->email,
-            'password'      => $request->password,
-        ];
-
-        $users = User::create($data);
-        Session::put('nama', $request->firstname);
-
-        return response()->json(['success' => 1]);
-
-    }
-
     public function logout(Request $request){
         session()->forget('nama');
         return response()->json(['success' => 1]);
